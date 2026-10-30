@@ -1,0 +1,95 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Neighbourhood Civic Mapping</title>
+
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+</head>
+
+<body>
+
+    <div class="page">
+
+        <div class="brand">
+            <div class="brand-icon">🏙️</div>
+
+            <h1>Neighbourhood Civic</h1>
+            <h2>Infrastructure Mapping</h2>
+
+            <p>
+                Report local problems, track complaints,
+                and help improve your neighbourhood.
+            </p>
+        </div>
+
+
+        <a href="{% url 'create_account' %}" class="create-account-btn">
+    Create Account
+    <span>+</span>
+</a>
+
+
+        <div class="portal-container">
+
+            <!-- USER PORTAL -->
+            <div class="portal-card user-card">
+
+                <div class="portal-icon">
+                    👤
+                </div>
+
+                <span class="portal-label">CITIZEN PORTAL</span>
+
+                <h3>User</h3>
+
+                <p>
+                    Report civic problems, track your complaints
+                    and view neighbourhood issues on the map.
+                </p>
+
+                <a href="{% url 'user_login' %}" class="portal-btn">
+    Enter User Portal
+    <span>→</span>
+</a>
+            </div>
+
+
+            <!-- ADMIN PORTAL -->
+            <div class="portal-card admin-card">
+
+                <div class="portal-icon">
+                    🏛️
+                </div>
+
+                <span class="portal-label">CORPORATOR PORTAL</span>
+
+                <h3>Admin</h3>
+
+                <p>
+                    Manage complaints, monitor problems,
+                    update progress and view the civic map.
+                </p>
+
+                <a href="{% url 'admin_login' %}" class="portal-btn">
+    Enter Admin Portal
+    <span>→</span>
+</a>
+            </div>
+
+        </div>
+
+
+        <div class="footer">
+            © 2026 Neighbourhood Civic Infrastructure Mapping
+        </div>
+
+    </div>
+
+</body>
+</html>

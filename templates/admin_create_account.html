@@ -1,0 +1,151 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Admin Create Account | Civic Mapping</title>
+
+    <link rel="stylesheet"
+          href="{% static 'css/login.css' %}">
+
+</head>
+
+<body>
+
+    <div class="page">
+
+        <div class="brand">
+
+            <div class="brand-icon">
+                🏛️
+            </div>
+
+            <h1>Create Admin Account</h1>
+
+            <h2>Corporator Management Portal</h2>
+
+            <p>
+                Create an administrator account to manage
+                neighbourhood civic complaints.
+            </p>
+
+        </div>
+
+
+        <div class="portal-card login-card">
+
+            <form method="POST">
+
+                {% csrf_token %}
+
+
+                <div class="form-group">
+
+                    <label for="username">
+                        Admin Username
+                    </label>
+
+                    <input
+                        type="text"
+                        id="username"
+                        name="username"
+                        placeholder="Enter admin username"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="email">
+                        Admin Email
+                    </label>
+
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        placeholder="Enter admin email"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="password">
+                        Password
+                    </label>
+
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        placeholder="Create password"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="confirm_password">
+                        Confirm Password
+                    </label>
+
+                    <input
+                        type="password"
+                        id="confirm_password"
+                        name="confirm_password"
+                        placeholder="Confirm password"
+                        required
+                    >
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="portal-btn"
+                >
+
+                    <span>Create Admin Account</span>
+
+                    <span>→</span>
+
+                </button>
+
+            </form>
+
+
+            {% if error %}
+
+            <p class="login-error">
+                {{ error }}
+            </p>
+
+            {% endif %}
+
+
+            <a
+                href="{% url 'admin_login' %}"
+                class="back-link"
+            >
+                ← Back to Admin Login
+            </a>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

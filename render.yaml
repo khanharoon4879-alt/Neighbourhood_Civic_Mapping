@@ -1,0 +1,21 @@
+﻿services:
+  - type: web
+    name: neighbourhood-civic-mapping
+    runtime: python
+    buildCommand: "./build.sh"
+    startCommand: "gunicorn config.wsgi:application"
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.13.0
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DEBUG
+        value: "False"
+      - key: RESEND_API_KEY
+        value: "re_Du7srVHB_CT5nbta8erQVkHfjNcBEFa5W"
+      - key: RESEND_FROM_EMAIL
+        value: "Civic Mapping <onboarding@resend.dev>"
+      - key: EMAIL_HOST_USER
+        value: "riznsaari3162@gmail.com"
+      - key: EMAIL_HOST_PASSWORD
+        value: "kqjk ggsq frag jmxu"

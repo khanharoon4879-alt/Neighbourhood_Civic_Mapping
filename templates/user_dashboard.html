@@ -1,0 +1,1044 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>User Dashboard | Civic Mapping</title>
+
+    <link rel="stylesheet"
+          href="{% static 'css/dashboard.css' %}">
+
+</head>
+
+<body>
+
+<div class="dashboard">
+
+    <!-- =================================================
+         SIDEBAR
+    ================================================== -->
+
+    <aside class="sidebar">
+
+        <div class="brand">
+
+            <div class="brand-icon">
+                🏙️
+            </div>
+
+            <div>
+                <h2>Civic Mapping</h2>
+                <span>Citizen Portal</span>
+            </div>
+
+        </div>
+
+
+        <div class="menu-title">
+            MAIN MENU
+        </div>
+
+
+        <nav class="sidebar-menu">
+
+            <a href="{% url 'user_dashboard' %}"
+               class="menu-item {% if not page %}active{% endif %}">
+
+                <span class="menu-icon">⌂</span>
+                <span>Dashboard</span>
+
+            </a>
+
+
+            <a href="{% url 'report_issue' %}"
+               class="menu-item">
+
+                <span class="menu-icon">⚠</span>
+                <span>Report Problem</span>
+
+            </a>
+
+
+            <a href="{% url 'my_complaints' %}"
+               class="menu-item {% if page == 'complaints' %}active{% endif %}">
+
+                <span class="menu-icon">▣</span>
+                <span>My Complaints</span>
+
+            </a>
+
+
+            <a href="{% url 'user_dashboard' %}"
+               class="menu-item">
+
+                <span class="menu-icon">⌖</span>
+                <span>Map View</span>
+
+            </a>
+
+
+            <div class="menu-title second-title">
+                ACCOUNT
+            </div>
+
+
+            <a href="{% url 'user_profile' %}"
+               class="menu-item {% if page == 'profile' %}active{% endif %}">
+
+                <span class="menu-icon">♙</span>
+                <span>Profile</span>
+
+            </a>
+
+        </nav>
+
+
+        <div class="sidebar-bottom">
+
+            <a href="{% url 'home' %}"
+               class="logout">
+
+                <span>↪</span>
+                <span>Logout</span>
+
+            </a>
+
+        </div>
+
+    </aside>
+
+
+    <!-- =================================================
+         MAIN CONTENT
+    ================================================== -->
+
+    <main class="main-content">
+
+
+        <!-- =================================================
+             TOPBAR
+        ================================================== -->
+
+        <header class="topbar">
+
+            <div class="welcome">
+
+                <p class="small-heading">
+                    CITIZEN DASHBOARD
+                </p>
+
+
+                <h1>
+                    Welcome back,
+                    {{ request.user.username }}
+                    👋
+                </h1>
+
+
+                <p>
+                    Here's what's happening in your neighbourhood.
+                </p>
+
+            </div>
+
+
+            <div class="topbar-right">
+
+                <div class="user-profile">
+
+                    <div class="avatar">
+                        {{ request.user.username|first|upper }}
+                    </div>
+
+
+                    <div class="user-info">
+
+                        <strong>
+                            {{ request.user.username }}
+                        </strong>
+
+                        <span>
+                            Resident
+                        </span>
+
+                    </div>
+
+
+                    <span class="profile-arrow">
+                        ▾
+                    </span>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- =================================================
+             PROFILE PAGE
+        ================================================== -->
+
+        {% if page == "profile" %}
+
+        <section class="profile-page-card">
+
+            <div class="profile-page-header">
+
+                <h2>
+                    My Profile
+                </h2>
+
+                <p>
+                    View your account information.
+                </p>
+
+            </div>
+
+
+            <div class="profile-main-card">
+
+                <div class="profile-avatar-large">
+                    {{ request.user.username|first|upper }}
+                </div>
+
+
+                <div class="profile-user-name">
+
+                    <h2>
+                        {{ request.user.username }}
+                    </h2>
+
+                    <span>
+                        Citizen / Resident
+                    </span>
+
+                </div>
+
+
+                <div class="profile-details">
+
+                    <div class="profile-detail">
+
+                        <span>
+                            Username
+                        </span>
+
+                        <strong>
+                            {{ request.user.username }}
+                        </strong>
+
+                    </div>
+
+
+                    <div class="profile-detail">
+
+                        <span>
+                            Email
+                        </span>
+
+                        <strong>
+
+                            {% if request.user.email %}
+
+                                {{ request.user.email }}
+
+                            {% else %}
+
+                                Not provided
+
+                            {% endif %}
+
+                        </strong>
+
+                    </div>
+
+
+                    <div class="profile-detail">
+
+                        <span>
+                            Account Created
+                        </span>
+
+                        <strong>
+                            {{ request.user.date_joined|date:"d M Y" }}
+                        </strong>
+
+                    </div>
+
+
+                    <div class="profile-detail">
+
+                        <span>
+                            Account Status
+                        </span>
+
+                        <strong class="profile-active">
+                            ● Active
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             MY COMPLAINTS PAGE
+        ================================================== -->
+
+        {% elif page == "complaints" %}
+
+        <section class="complaints-card">
+
+            <div class="card-header">
+
+                <div>
+
+                    <h2>
+                        My Complaints
+                    </h2>
+
+                    <p>
+                        Track the status of your submitted reports.
+                    </p>
+
+                </div>
+
+
+                <a href="{% url 'report_issue' %}">
+                    + Report Issue
+                </a>
+
+            </div>
+
+
+            <div class="complaints-list">
+
+                {% for complaint in complaints %}
+
+                <div class="complaint-row">
+
+
+                    <div class="complaint-main">
+
+                        <div>
+
+                            <strong>
+                                {{ complaint.title }}
+                            </strong>
+
+                            <span>
+
+                                {{ complaint.get_category_display }}
+
+                                ·
+
+                                {{ complaint.created_at|date:"d M Y" }}
+
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- STATUS -->
+
+                    <div class="complaint-status
+
+                        {% if complaint.status == 'in_progress' %}
+
+                            progress
+
+                        {% elif complaint.status == 'resolved' %}
+
+                            resolved
+
+                        {% else %}
+
+                            reported
+
+                        {% endif %}
+
+                    ">
+
+                        <i></i>
+
+
+                        {% if complaint.status == "resolved" %}
+
+                            <span class="solved-text">
+                                ✓ Solved
+                            </span>
+
+                            <a href="{% url 'give_feedback' complaint.id %}" class="feedback-btn">
+    Give Feedback
+</a>
+
+
+                        {% elif complaint.status == "in_progress" %}
+
+                            ↻ In Progress
+
+
+                        {% else %}
+
+                            ⏳ Pending
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <div class="complaint-arrow">
+                        →
+                    </div>
+
+                </div>
+
+
+                {% empty %}
+
+                <div class="empty-state">
+
+                    <div>
+                        📋
+                    </div>
+
+                    <strong>
+                        No complaints reported yet.
+                    </strong>
+
+                    <span>
+                        Your submitted complaints will appear here.
+                    </span>
+
+                </div>
+
+                {% endfor %}
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             NORMAL DASHBOARD
+        ================================================== -->
+
+        {% else %}
+
+
+        <!-- =================================================
+             QUICK STATS
+        ================================================== -->
+
+        <section class="stats-grid">
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon purple">
+                    ▣
+                </div>
+
+                <div class="stat-content">
+
+                    <span>
+                        Total Complaints
+                    </span>
+
+                    <strong>
+                        {{ total_complaints }}
+                    </strong>
+
+                    <small>
+                        All your reports
+                    </small>
+
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon orange">
+                    ◷
+                </div>
+
+                <div class="stat-content">
+
+                    <span>
+                        In Progress
+                    </span>
+
+                    <strong>
+                        {{ in_progress }}
+                    </strong>
+
+                    <small>
+                        Currently being worked on
+                    </small>
+
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon green">
+                    ✓
+                </div>
+
+                <div class="stat-content">
+
+                    <span>
+                        Resolved
+                    </span>
+
+                    <strong>
+                        {{ resolved }}
+                    </strong>
+
+                    <small>
+                        Problems fixed
+                    </small>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             MAP + REPORT
+        ================================================== -->
+
+        <section class="main-grid">
+
+
+            <!-- MAP -->
+
+            <div class="map-card">
+
+                <div class="card-header">
+
+                    <div>
+
+                        <h2>
+                            Neighbourhood Map
+                        </h2>
+
+                        <p>
+                            View civic problems reported around your area.
+                        </p>
+
+                    </div>
+
+
+                    <button class="view-map-btn"
+                            type="button">
+
+                        Full Map →
+
+                    </button>
+
+                </div>
+
+
+                <div class="map-area">
+
+                    <div id="neighbourhoodMap"></div>
+
+                </div>
+
+            </div>
+
+
+            <!-- REPORT CARD -->
+
+            <div class="report-card">
+
+                <div class="report-icon">
+                    ⚠
+                </div>
+
+
+                <span class="report-label">
+                    CIVIC ISSUE
+                </span>
+
+
+                <h2>
+                    Found a problem?
+                </h2>
+
+
+                <p>
+
+                    Help improve your neighbourhood by reporting
+                    potholes, garbage, street lights, water leakage
+                    and other civic issues.
+
+                </p>
+
+
+                <div class="report-features">
+
+                    <div>
+
+                        <span>
+                            📸
+                        </span>
+
+                        <p>
+                            Take a photo
+                        </p>
+
+                    </div>
+
+
+                    <div>
+
+                        <span>
+                            📍
+                        </span>
+
+                        <p>
+                            Add location
+                        </p>
+
+                    </div>
+
+
+                    <div>
+
+                        <span>
+                            📝
+                        </span>
+
+                        <p>
+                            Add description
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <a href="{% url 'report_issue' %}"
+                   class="report-btn">
+
+                    Report a Problem
+
+                    <span>
+                        →
+                    </span>
+
+                </a>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             RECENT COMPLAINTS
+        ================================================== -->
+
+        <section class="complaints-card">
+
+            <div class="card-header">
+
+                <div>
+
+                    <h2>
+                        My Recent Complaints
+                    </h2>
+
+                    <p>
+                        Track the status of your submitted reports.
+                    </p>
+
+                </div>
+
+
+                <a href="{% url 'my_complaints' %}">
+                    View All →
+                </a>
+
+            </div>
+
+
+            <div class="complaints-list">
+
+
+                {% for complaint in complaints|slice:":3" %}
+
+
+                <div class="complaint-row">
+
+
+                    <div class="complaint-main">
+
+                        <div>
+
+                            <strong>
+                                {{ complaint.title }}
+                            </strong>
+
+                            <span>
+
+                                {{ complaint.get_category_display }}
+
+                                ·
+
+                                {{ complaint.created_at|date:"d M Y" }}
+
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- STATUS -->
+
+                    <div class="complaint-status
+
+                        {% if complaint.status == 'in_progress' %}
+
+                            progress
+
+                        {% elif complaint.status == 'resolved' %}
+
+                            resolved
+
+                        {% else %}
+
+                            reported
+
+                        {% endif %}
+
+                    ">
+
+                        <i></i>
+
+
+                        {% if complaint.status == "resolved" %}
+
+                            <span class="solved-text">
+                                ✓ Solved
+                            </span>
+
+                            <a href="#"
+                               class="feedback-btn">
+                                Give Feedback
+                            </a>
+
+
+                        {% elif complaint.status == "in_progress" %}
+
+                            ↻ In Progress
+
+
+                        {% else %}
+
+                            ⏳ Pending
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <div class="complaint-arrow">
+                        →
+                    </div>
+
+
+                </div>
+
+
+                {% empty %}
+
+
+                <div class="empty-state">
+
+                    <div>
+                        📋
+                    </div>
+
+                    <strong>
+                        No complaints reported yet.
+                    </strong>
+
+                    <span>
+                        Your submitted complaints will appear here.
+                    </span>
+
+                </div>
+
+
+                {% endfor %}
+
+
+            </div>
+
+        </section>
+
+
+        {% endif %}
+
+
+    </main>
+
+</div>
+
+
+<!-- =================================================
+     MAP DATA
+================================================== -->
+
+{{ map_complaints|json_script:"complaints-data" }}
+
+
+<script>
+
+function initMap() {
+
+    const mapCenter = {
+        lat: 19.0760,
+        lng: 72.8777
+    };
+
+
+    const map = new google.maps.Map(
+
+        document.getElementById("neighbourhoodMap"),
+
+        {
+            center: mapCenter,
+            zoom: 13,
+
+            mapTypeControl: true,
+
+            streetViewControl: false,
+
+            fullscreenControl: true
+        }
+
+    );
+
+
+    const complaints = JSON.parse(
+
+        document.getElementById(
+            "complaints-data"
+        ).textContent
+
+    );
+
+
+    const bounds =
+        new google.maps.LatLngBounds();
+
+
+    const infoWindow =
+        new google.maps.InfoWindow();
+
+
+    complaints.forEach(function(complaint) {
+
+
+        const position = {
+
+            lat: Number(
+                complaint.latitude
+            ),
+
+            lng: Number(
+                complaint.longitude
+            )
+
+        };
+
+
+        if (
+
+            !Number.isFinite(position.lat) ||
+
+            !Number.isFinite(position.lng) ||
+
+            position.lat < -90 ||
+
+            position.lat > 90 ||
+
+            position.lng < -180 ||
+
+            position.lng > 180
+
+        ) {
+
+            return;
+
+        }
+
+
+        bounds.extend(position);
+
+
+        const marker =
+            new google.maps.Marker({
+
+                position: position,
+
+                map: map,
+
+                title: complaint.title,
+
+                icon: {
+
+                    path:
+                        google.maps.SymbolPath.CIRCLE,
+
+                    scale: 10,
+
+                    fillColor: "#8B5CF6",
+
+                    fillOpacity: 1,
+
+                    strokeColor: "#FFFFFF",
+
+                    strokeWeight: 2
+
+                }
+
+            });
+
+
+        const card =
+            document.createElement("div");
+
+
+        card.style.minWidth = "210px";
+
+        card.style.maxWidth = "280px";
+
+        card.style.padding = "5px";
+
+        card.style.color = "#222";
+
+
+        const title =
+            document.createElement("h3");
+
+
+        title.textContent =
+            complaint.title;
+
+
+        const category =
+            document.createElement("p");
+
+
+        category.textContent =
+            "Category: " +
+            complaint.category;
+
+
+        const status =
+            document.createElement("p");
+
+
+        status.textContent =
+            "Status: " +
+            complaint.status;
+
+
+        const description =
+            document.createElement("p");
+
+
+        description.textContent =
+            complaint.description;
+
+
+        card.appendChild(title);
+
+        card.appendChild(category);
+
+        card.appendChild(status);
+
+        card.appendChild(description);
+
+
+        marker.addListener(
+            "click",
+            function() {
+
+                infoWindow.setContent(card);
+
+                infoWindow.open({
+
+                    anchor: marker,
+
+                    map: map
+
+                });
+
+            }
+        );
+
+
+    });
+
+
+    if (complaints.length === 1) {
+
+        map.setCenter(
+            bounds.getCenter()
+        );
+
+        map.setZoom(15);
+
+    }
+
+    else if (complaints.length > 1) {
+
+        map.fitBounds(bounds);
+
+    }
+
+}
+
+</script>
+
+
+
+<!-- <script -->
+    async
+    defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAcz0yo2ML013uiOSQCmh4EujbUSRRNObU&callback=initMap">
+    
+<!-- </script> -->
+
+
+</body>
+
+</html>
+
+

@@ -1,0 +1,126 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Create Account | Civic Mapping</title>
+
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+</head>
+
+<body>
+
+    <div class="page">
+
+        <div class="brand">
+
+            <div class="brand-icon">
+                👤
+            </div>
+
+            <h1>Create Account</h1>
+
+            <h2>Neighbourhood Civic Portal</h2>
+
+            <p>
+                Create your account to access the Civic Mapping Portal.
+            </p>
+
+        </div>
+
+
+        <div class="portal-card login-card">
+
+            <h3>Create Your Account</h3>
+
+            <form method="POST">
+
+                {% csrf_token %}
+
+                <div class="form-group">
+
+                    <label for="username">
+                        Username
+                    </label>
+
+                    <input
+                        type="text"
+                        id="username"
+                        name="username"
+                        placeholder="Enter username"
+                        required
+                    >
+
+                </div>
+
+
+
+                <div class="form-group">
+
+    <label for="email">
+        Email Address
+    </label>
+
+    <input
+        type="email"
+        id="email"
+        name="email"
+        placeholder="Enter your email address"
+        required
+    >
+
+</div>
+
+
+                <div class="form-group">
+
+                    <label for="password">
+                        Password
+                    </label>
+
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        placeholder="Enter password"
+                        required
+                    >
+
+                </div>
+
+
+                <button type="submit" class="portal-btn">
+
+                    <span>Create Account</span>
+
+                    <span>→</span>
+
+                </button>
+
+            </form>
+
+
+            {% if error %}
+
+            <p style="color: #ff6b6b; text-align: center; margin-top: 15px;">
+                {{ error }}
+            </p>
+
+            {% endif %}
+
+
+            <a href="{% url 'home' %}" class="back-link">
+                ← Back to Portal Selection
+            </a>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

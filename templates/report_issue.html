@@ -1,0 +1,443 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Report Issue | Civic Mapping</title>
+
+    <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+</head>
+
+<body>
+
+<div class="dashboard">
+
+    <!-- ================= SIDEBAR ================= -->
+
+    <aside class="sidebar">
+
+        <div class="brand">
+
+            <div class="brand-icon">
+                🏙️
+            </div>
+
+            <div>
+                <h2>Civic Mapping</h2>
+                <span>Citizen Portal</span>
+            </div>
+
+        </div>
+
+
+        <div class="menu-title">
+            MAIN MENU
+        </div>
+
+
+        <nav class="sidebar-menu">
+
+            <a href="{% url 'user_dashboard' %}" class="menu-item">
+
+                <span class="menu-icon">⌂</span>
+                <span>Dashboard</span>
+
+            </a>
+
+
+            <a href="{% url 'report_issue' %}" class="menu-item active">
+
+                <span class="menu-icon">⚠</span>
+                <span>Report Problem</span>
+
+            </a>
+
+
+            <a href="{% url 'my_complaints' %}" class="menu-item">
+
+                <span class="menu-icon">▣</span>
+                <span>My Complaints</span>
+
+            </a>
+
+
+            <a href="{% url 'user_dashboard' %}" class="menu-item">
+
+                <span class="menu-icon">⌖</span>
+                <span>Map View</span>
+
+            </a>
+
+        </nav>
+
+
+        <!-- ACCOUNT -->
+
+        <div class="menu-title second-title">
+            ACCOUNT
+        </div>
+
+
+        <nav class="sidebar-menu">
+
+            <a href="{% url 'user_profile' %}" class="menu-item">
+
+                <span class="menu-icon">♙</span>
+                <span>Profile</span>
+
+            </a>
+
+        </nav>
+
+
+        <!-- ================= SIDEBAR BOTTOM ================= -->
+
+        <div class="sidebar-bottom">
+
+            <a href="{% url 'home' %}" class="logout">
+
+                <span>↪</span>
+                <span>Logout</span>
+
+            </a>
+
+        </div>
+
+    </aside>
+
+
+    <!-- ================= MAIN CONTENT ================= -->
+
+    <main class="main-content">
+
+
+        <!-- HEADER -->
+
+        <header class="topbar">
+
+            <div class="welcome">
+
+                <p class="small-heading">
+                    CIVIC ISSUE REPORT
+                </p>
+
+                <h1>
+                    Report a Problem 📢
+                </h1>
+
+                <p>
+                    Help improve your neighbourhood by reporting
+                    a civic issue.
+                </p>
+
+            </div>
+
+        </header>
+
+
+        <!-- ================= FORM CARD ================= -->
+
+        <section class="dashboard-card report-page-card">
+
+            <div class="report-page-header">
+
+                <h2>
+                    Report a Civic Issue
+                </h2>
+
+                <p>
+                    Provide details about the problem so it can
+                    be reviewed by the concerned authority.
+                </p>
+
+            </div>
+
+
+            <form
+                method="POST"
+                enctype="multipart/form-data"
+                class="issue-form"
+            >
+
+                {% csrf_token %}
+
+
+                <!-- ISSUE TITLE -->
+
+                <div class="issue-form-group">
+
+                    <label for="title">
+                        Issue Title
+                    </label>
+
+                    <input
+                        type="text"
+                        id="title"
+                        name="title"
+                        placeholder="Example: Large pothole on road"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- CATEGORY -->
+
+                <div class="issue-form-group">
+
+                    <label for="category">
+                        Issue Category
+                    </label>
+
+                    <select
+                        id="category"
+                        name="category"
+                        required
+                    >
+
+                        <option value="">
+                            Select Category
+                        </option>
+
+                        <option value="road">
+                            Road Damage
+                        </option>
+
+                        <option value="streetlight">
+                            Street Light
+                        </option>
+
+                        <option value="garbage">
+                            Garbage
+                        </option>
+
+                        <option value="water">
+                            Water Problem
+                        </option>
+
+                        <option value="drainage">
+                            Drainage
+                        </option>
+
+                        <option value="other">
+                            Other
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- DESCRIPTION -->
+
+                <div class="issue-form-group">
+
+                    <label for="description">
+                        Description
+                    </label>
+
+                    <textarea
+                        id="description"
+                        name="description"
+                        rows="6"
+                        placeholder="Describe the problem in detail..."
+                        required
+                    ></textarea>
+
+                </div>
+
+
+                <!-- ================= PHOTOS ================= -->
+
+                <div class="issue-form-group">
+
+                    <label for="photos">
+                        Upload Photos
+                    </label>
+
+                    <input
+                        type="file"
+                        id="photos"
+                        name="photos"
+                        accept="image/*"
+                        multiple
+                    >
+
+                    <small class="form-help">
+                        Upload up to 3 photos of the civic issue.
+                    </small>
+
+                </div>
+
+
+                <!-- LOCATION -->
+
+                <div class="issue-form-group">
+
+                    <label>
+                        Location
+                    </label>
+
+
+                    <div class="location-box">
+
+                        <button
+                            type="button"
+                            id="locationBtn"
+                            class="location-btn"
+                        >
+                            📍 Share My Location
+                        </button>
+
+
+                        <p
+                            id="locationStatus"
+                            class="location-status"
+                        >
+                            Location not selected
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- HIDDEN LOCATION VALUES -->
+
+                <input
+                    type="hidden"
+                    id="latitude"
+                    name="latitude"
+                >
+
+                <input
+                    type="hidden"
+                    id="longitude"
+                    name="longitude"
+                >
+
+                <input
+                    type="hidden"
+                    id="address"
+                    name="address"
+                >
+
+
+                <!-- SUBMIT -->
+
+                <button
+                    type="submit"
+                    class="issue-submit-btn"
+                >
+                    Submit Issue →
+                </button>
+
+
+            </form>
+
+        </section>
+
+
+    </main>
+
+</div>
+
+
+<!-- ================= LOCATION SCRIPT ================= -->
+
+<script>
+
+const locationBtn =
+    document.getElementById("locationBtn");
+
+const locationStatus =
+    document.getElementById("locationStatus");
+
+const latitude =
+    document.getElementById("latitude");
+
+const longitude =
+    document.getElementById("longitude");
+
+
+locationBtn.addEventListener("click", function () {
+
+    if (!navigator.geolocation) {
+
+        locationStatus.textContent =
+            "Location is not supported by your browser.";
+
+        return;
+    }
+
+
+    locationStatus.textContent =
+        "Getting your location...";
+
+
+    navigator.geolocation.getCurrentPosition(
+
+        function (position) {
+
+            latitude.value =
+                position.coords.latitude;
+
+            longitude.value =
+                position.coords.longitude;
+
+
+            locationStatus.textContent =
+                "✓ Location selected successfully.";
+
+        },
+
+
+        function () {
+
+            locationStatus.textContent =
+                "Unable to get your location. Please allow location access.";
+
+        }
+
+    );
+
+});
+
+</script>
+
+
+<!-- ================= PHOTO LIMIT SCRIPT ================= -->
+
+<script>
+
+const photosInput =
+    document.getElementById("photos");
+
+photosInput.addEventListener("change", function () {
+
+    console.log("Selected photos:", this.files.length);
+
+    for (let i = 0; i < this.files.length; i++) {
+        console.log(this.files[i].name);
+    }
+
+    if (this.files.length > 3) {
+
+        alert("You can upload maximum 3 photos.");
+
+        this.value = "";
+
+    }
+
+});
+
+</script>
+
+
+</body>
+
+</html>

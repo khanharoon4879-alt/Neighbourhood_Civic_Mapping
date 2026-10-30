@@ -1,0 +1,406 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>My Complaints | Neighbourhood Civic Mapping</title>
+
+    <link rel="stylesheet"
+          href="{% static 'css/my_complaints.css' %}">
+
+</head>
+
+
+<body>
+
+
+    <!-- ================= HEADER ================= -->
+
+    <header class="topbar">
+
+        <div class="brand">
+
+            <span class="brand-icon">
+                📍
+            </span>
+
+            <div>
+
+                <h2>
+                    Neighbourhood Civic Mapping
+                </h2>
+
+                <p>
+                    My Complaints
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <a
+            href="{% url 'user_dashboard' %}"
+            class="back-btn"
+        >
+            ← Dashboard
+        </a>
+
+    </header>
+
+
+
+    <!-- ================= MAIN ================= -->
+
+    <main class="container">
+
+
+        <div class="page-heading">
+
+            <div>
+
+                <h1>
+                    My Complaints
+                </h1>
+
+                <p>
+                    Track the status of your reported civic issues.
+                </p>
+
+            </div>
+
+
+            <a
+                href="{% url 'report_issue' %}"
+                class="report-btn"
+            >
+                + Report New Issue
+            </a>
+
+        </div>
+
+
+
+        <!-- ================= COMPLAINTS ================= -->
+
+        {% if complaints %}
+
+        <div class="complaints-list">
+
+
+            {% for complaint in complaints %}
+
+
+            <div class="complaint-card">
+
+
+                <!-- ================= TOP SECTION ================= -->
+
+                <div class="complaint-top">
+
+
+                    <div>
+
+                        <h2>
+                            {{ complaint.title }}
+                        </h2>
+
+
+                        <span class="category">
+
+                            {{ complaint.get_category_display }}
+
+                        </span>
+
+                    </div>
+
+
+
+                    <!-- ================= STATUS ================= -->
+
+                    {% if complaint.status == "resolved" %}
+
+                    <div class="status resolved">
+
+                        <span class="status-icon">
+                            ✓
+                        </span>
+
+                        <span>
+                            Solved
+                        </span>
+
+                    </div>
+
+
+                    {% elif complaint.status == "in_progress" %}
+
+                    <div class="status in-progress">
+
+                        <span class="status-icon">
+                            ↻
+                        </span>
+
+                        <span>
+                            In Progress
+                        </span>
+
+                    </div>
+
+
+                    {% else %}
+
+                    <div class="status pending">
+
+                        <span class="status-icon">
+                            ⏳
+                        </span>
+
+                        <span>
+                            Pending
+                        </span>
+
+                    </div>
+
+                    {% endif %}
+
+
+                </div>
+
+
+
+                <!-- ================= DESCRIPTION ================= -->
+
+                <div class="complaint-description">
+
+                    <p>
+                        {{ complaint.description }}
+                    </p>
+
+                </div>
+
+
+
+                <!-- ================= PHOTOS ================= -->
+
+                {% if complaint.photos.all %}
+
+                <div class="complaint-photos">
+
+
+                    {% for photo in complaint.photos.all %}
+
+                    <div class="complaint-photo">
+
+                        <img
+                            src="{{ photo.image.url }}"
+                            alt="Complaint Photo"
+                        >
+
+                    </div>
+
+                    {% endfor %}
+
+
+                </div>
+
+                {% endif %}
+
+
+
+                <!-- ================= DETAILS ================= -->
+
+                <div class="complaint-details">
+
+
+                    <div class="detail">
+
+                        <span class="detail-label">
+                            Reported On
+                        </span>
+
+                        <span>
+                            {{ complaint.created_at|date:"d M Y, h:i A" }}
+                        </span>
+
+                    </div>
+
+
+
+                    {% if complaint.address %}
+
+                    <div class="detail">
+
+                        <span class="detail-label">
+                            Location
+                        </span>
+
+                        <span>
+                            {{ complaint.address }}
+                        </span>
+
+                    </div>
+
+                    {% endif %}
+
+
+                </div>
+
+
+
+                <!-- ================= FOOTER ================= -->
+
+                <div class="complaint-footer">
+
+
+                    <!-- LEFT -->
+
+                    <div class="footer-left">
+
+
+                        <span>
+                            Complaint #{{ complaint.id }}
+                        </span>
+
+
+
+                        {% if complaint.status == "resolved" %}
+
+                        <span class="completed-message">
+
+                            ✓ Issue resolved
+
+                        </span>
+
+
+                        {% elif complaint.status == "in_progress" %}
+
+                        <span class="progress-message">
+
+                            Your issue is being worked on
+
+                        </span>
+
+
+                        {% else %}
+
+                        <span class="pending-message">
+
+                            Waiting for action
+
+                        </span>
+
+                        {% endif %}
+
+
+                    </div>
+
+
+
+                    <!-- ================= FEEDBACK ================= -->
+
+                    <div class="complaint-feedback">
+
+
+                        {% if complaint.status == "resolved" %}
+
+
+                            {% if complaint.feedback %}
+
+                            <span class="feedback-submitted">
+
+                                ✓ Feedback Submitted
+
+                            </span>
+
+
+                            {% else %}
+
+                            <a
+                               href="{% url 'give_feedback' complaint.id %}"
+                                class="feedback-btn"
+                            >
+
+                                ⭐ Give Feedback
+
+                            </a>
+
+                            {% endif %}
+
+
+                        {% else %}
+
+                        <span class="feedback-disabled">
+
+                            Feedback after resolution
+
+                        </span>
+
+                        {% endif %}
+
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+            {% endfor %}
+
+
+        </div>
+
+
+        {% else %}
+
+
+        <!-- ================= EMPTY STATE ================= -->
+
+        <div class="empty-state">
+
+
+            <div class="empty-icon">
+                📋
+            </div>
+
+
+            <h2>
+                No Complaints Yet
+            </h2>
+
+
+            <p>
+                You haven't reported any civic issue yet.
+            </p>
+
+
+            <a
+                href="{% url 'report_issue' %}"
+                class="report-btn"
+            >
+
+                Report an Issue
+
+            </a>
+
+
+        </div>
+
+
+        {% endif %}
+
+
+    </main>
+
+
+</body>
+
+</html>

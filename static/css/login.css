@@ -1,0 +1,649 @@
+/* =====================================================
+   NEIGHBOURHOOD CIVIC INFRASTRUCTURE MAPPING
+   LOGIN / PORTAL SELECTION
+   ===================================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Segoe UI", Arial, sans-serif;
+    min-height: 100vh;
+
+    background:
+        radial-gradient(circle at 15% 20%, rgba(124, 58, 237, 0.20), transparent 30%),
+        radial-gradient(circle at 85% 80%, rgba(99, 102, 241, 0.18), transparent 30%),
+        #080914;
+
+    color: #ffffff;
+    overflow-x: hidden;
+}
+
+
+/* =====================================================
+   MAIN PAGE
+   ===================================================== */
+
+.page {
+    min-height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    padding: 50px 25px;
+}
+
+
+/* =====================================================
+   BRAND SECTION
+   ===================================================== */
+
+.brand {
+    text-align: center;
+    max-width: 700px;
+    margin-bottom: 45px;
+}
+
+.brand-icon {
+    width: 68px;
+    height: 68px;
+
+    margin: 0 auto 18px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 32px;
+
+    background: linear-gradient(
+        135deg,
+        #7c3aed,
+        #4f46e5
+    );
+
+    border-radius: 20px;
+
+    box-shadow:
+        0 10px 35px rgba(124, 58, 237, 0.35);
+
+    border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.brand h1 {
+    font-size: 38px;
+    font-weight: 700;
+    letter-spacing: -1px;
+}
+
+.brand h2 {
+    margin-top: 4px;
+
+    font-size: 22px;
+    font-weight: 500;
+
+    color: #a78bfa;
+}
+
+.brand p {
+    margin-top: 15px;
+
+    color: #9ca3af;
+    font-size: 15px;
+    line-height: 1.7;
+}
+
+
+/* =====================================================
+   PORTAL CONTAINER
+   ===================================================== */
+
+.portal-container {
+    width: 100%;
+    max-width: 900px;
+
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+
+    gap: 24px;
+}
+
+
+/* =====================================================
+   PORTAL CARD
+   ===================================================== */
+
+.portal-card {
+    position: relative;
+
+    padding: 35px;
+
+    min-height: 330px;
+
+    display: flex;
+    flex-direction: column;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255, 255, 255, 0.075),
+            rgba(255, 255, 255, 0.025)
+        );
+
+    border: 1px solid rgba(255, 255, 255, 0.10);
+
+    border-radius: 24px;
+
+    backdrop-filter: blur(15px);
+
+    overflow: hidden;
+
+    transition:
+        transform 0.35s ease,
+        border-color 0.35s ease,
+        box-shadow 0.35s ease;
+}
+
+
+/* Decorative glow */
+
+.portal-card::before {
+    content: "";
+
+    position: absolute;
+
+    width: 180px;
+    height: 180px;
+
+    top: -80px;
+    right: -70px;
+
+    background: #7c3aed;
+
+    border-radius: 50%;
+
+    filter: blur(70px);
+
+    opacity: 0.15;
+
+    transition: opacity 0.35s ease;
+}
+
+
+/* Hover */
+
+.portal-card:hover {
+    transform: translateY(-8px);
+
+    border-color: rgba(167, 139, 250, 0.45);
+
+    box-shadow:
+        0 20px 50px rgba(0, 0, 0, 0.35),
+        0 0 35px rgba(124, 58, 237, 0.12);
+}
+
+.portal-card:hover::before {
+    opacity: 0.30;
+}
+
+
+/* =====================================================
+   PORTAL ICON
+   ===================================================== */
+
+.portal-icon {
+    width: 62px;
+    height: 62px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 28px;
+
+    background: rgba(124, 58, 237, 0.14);
+
+    border: 1px solid rgba(167, 139, 250, 0.20);
+
+    border-radius: 18px;
+
+    margin-bottom: 22px;
+
+    transition: transform 0.3s ease;
+}
+
+.portal-card:hover .portal-icon {
+    transform: scale(1.08) rotate(-2deg);
+}
+
+
+/* =====================================================
+   PORTAL LABEL
+   ===================================================== */
+
+.portal-label {
+    font-size: 11px;
+    font-weight: 700;
+
+    letter-spacing: 1.5px;
+
+    color: #a78bfa;
+
+    margin-bottom: 7px;
+}
+
+
+/* =====================================================
+   PORTAL TITLE
+   ===================================================== */
+
+.portal-card h3 {
+    font-size: 28px;
+    font-weight: 650;
+
+    margin-bottom: 12px;
+}
+
+.portal-card p {
+    color: #9ca3af;
+
+    font-size: 14px;
+    line-height: 1.7;
+
+    max-width: 340px;
+
+    margin-bottom: 25px;
+}
+
+
+/* =====================================================
+   PORTAL BUTTON
+   ===================================================== */
+
+.portal-btn {
+    margin-top: auto;
+
+    text-decoration: none;
+
+    width: 100%;
+
+    padding: 13px 18px;
+
+    border: 1px solid rgba(167, 139, 250, 0.25);
+
+    border-radius: 12px;
+
+    background: rgba(124, 58, 237, 0.12);
+
+    color: #ffffff;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    transition:
+        background 0.3s ease,
+        border-color 0.3s ease,
+        transform 0.3s ease;
+}
+
+.portal-btn span {
+    font-size: 20px;
+
+    transition: transform 0.3s ease;
+}
+
+.portal-btn:hover {
+    background: linear-gradient(
+        135deg,
+        #7c3aed,
+        #5b21b6
+    );
+
+    border-color: #8b5cf6;
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 8px 25px rgba(124, 58, 237, 0.30);
+}
+
+.portal-btn:hover span {
+    transform: translateX(5px);
+}
+
+
+/* =====================================================
+   FOOTER
+   ===================================================== */
+
+.footer {
+    margin-top: 45px;
+
+    color: #6b7280;
+
+    font-size: 12px;
+
+    text-align: center;
+}
+
+
+/* =====================================================
+   RESPONSIVE
+   ===================================================== */
+
+@media (max-width: 700px) {
+
+    .page {
+        padding: 40px 18px;
+    }
+
+    .brand h1 {
+        font-size: 30px;
+    }
+
+    .brand h2 {
+        font-size: 18px;
+    }
+
+    .portal-container {
+        grid-template-columns: 1fr;
+    }
+
+    .portal-card {
+        min-height: 300px;
+    }
+}
+
+
+@media (max-width: 420px) {
+
+    .brand h1 {
+        font-size: 26px;
+    }
+
+    .brand p {
+        font-size: 13px;
+    }
+
+    .portal-card {
+        padding: 28px;
+    }
+}
+
+/* =====================================================
+   LOGIN FORM
+   ===================================================== */
+
+.login-card {
+    width: 100%;
+    max-width: 480px;
+    min-height: auto;
+    padding: 38px;
+}
+
+
+/* FORM GROUP */
+
+.form-group {
+    margin-bottom: 22px;
+}
+
+.form-group label {
+    display: block;
+
+    margin-bottom: 9px;
+
+    color: #e5e7eb;
+
+    font-size: 13px;
+    font-weight: 600;
+}
+
+
+/* INPUT */
+
+.form-group input {
+    width: 100%;
+
+    padding: 14px 16px;
+
+    border: 1px solid rgba(255, 255, 255, 0.12);
+
+    border-radius: 12px;
+
+    outline: none;
+
+    background: rgba(255, 255, 255, 0.055);
+
+    color: #ffffff;
+
+    font-size: 14px;
+
+    transition:
+        border-color 0.25s ease,
+        background 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+.form-group input::placeholder {
+    color: #6b7280;
+}
+
+.form-group input:focus {
+    background: rgba(124, 58, 237, 0.08);
+
+    border-color: #8b5cf6;
+
+    box-shadow:
+        0 0 0 3px rgba(124, 58, 237, 0.12),
+        0 0 20px rgba(124, 58, 237, 0.10);
+}
+
+
+/* LOGIN BUTTON */
+
+.login-card .portal-btn {
+    margin-top: 8px;
+
+    min-height: 50px;
+
+    border: none;
+
+    background: linear-gradient(
+        135deg,
+        #7c3aed,
+        #5b21b6
+    );
+
+    box-shadow:
+        0 8px 25px rgba(124, 58, 237, 0.25);
+}
+
+.login-card .portal-btn:hover {
+    background: linear-gradient(
+        135deg,
+        #8b5cf6,
+        #6d28d9
+    );
+
+    transform: translateY(-3px);
+
+    box-shadow:
+        0 12px 30px rgba(124, 58, 237, 0.40);
+}
+
+
+/* BACK TO PORTAL */
+
+.back-link {
+    display: flex;
+
+    width: fit-content;
+
+    align-items: center;
+
+    gap: 7px;
+
+    margin: 25px auto 0;
+
+    padding: 9px 14px;
+
+    border: 1px solid rgba(255, 255, 255, 0.10);
+
+    border-radius: 10px;
+
+    background: rgba(255, 255, 255, 0.035);
+
+    color: #a78bfa;
+
+    font-size: 12px;
+    font-weight: 600;
+
+    text-decoration: none;
+
+    transition:
+        color 0.25s ease,
+        background 0.25s ease,
+        border-color 0.25s ease,
+        transform 0.25s ease;
+}
+
+.back-link:hover {
+    color: #ffffff;
+
+    background: rgba(124, 58, 237, 0.14);
+
+    border-color: rgba(167, 139, 250, 0.35);
+
+    transform: translateY(-2px);
+}
+
+
+.create-account-btn {
+    position: absolute;
+    top: 25px;
+    right: 30px;
+
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    padding: 11px 18px;
+
+    background: #7c3aed;
+    color: white;
+
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+
+    border-radius: 10px;
+
+    border: 1px solid rgba(167, 139, 250, 0.3);
+
+    transition: 0.3s ease;
+}
+
+.create-account-btn span {
+    font-size: 20px;
+    line-height: 1;
+}
+
+.create-account-btn:hover {
+    transform: translateY(-2px);
+    background: #8b5cf6;
+    box-shadow: 0 8px 25px rgba(124, 58, 237, 0.35);
+}
+
+
+.login-error {
+    color: #ff6b6b;
+    text-align: center;
+    margin-top: 15px;
+    font-size: 14px;
+    font-weight: 600;
+}
+.top-create-account {
+    position: absolute;
+    top: 25px;
+    right: 35px;
+
+    display: flex;
+    align-items: center;
+    gap: 7px;
+
+    font-size: 13px;
+}
+
+.top-create-account span {
+    color: #777b91;
+}
+
+.top-create-account a {
+    color: #a78bfa;
+    text-decoration: none;
+    font-weight: 600;
+
+    transition: 0.2s ease;
+}
+
+.top-create-account a:hover {
+    color: #c4b5fd;
+    text-decoration: underline;
+}
+.top-create-account {
+    position: absolute;
+    top: 25px;
+    right: 35px;
+
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    font-size: 13px;
+}
+
+.top-create-account span {
+    color: #777b91;
+}
+
+.create-account-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 10px 18px;
+
+    background: #7c3aed;
+    color: #ffffff;
+
+    border: 1px solid #8b5cf6;
+    border-radius: 8px;
+
+    text-decoration: none;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    transition: all 0.2s ease;
+}
+
+.create-account-btn:hover {
+    background: #8b5cf6;
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 8px 20px rgba(124, 58, 237, 0.3);
+}

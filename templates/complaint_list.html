@@ -1,0 +1,265 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{{ page_title }} | Civic Mapping</title>
+
+    <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+
+    <style>
+        .complaints-page {
+            padding: 30px;
+        }
+
+        .page-heading {
+            margin-bottom: 25px;
+        }
+
+        .page-heading h1 {
+            font-size: 28px;
+            margin-bottom: 6px;
+        }
+
+        .page-heading p {
+            color: #777;
+        }
+
+        .complaints-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .complaint-row {
+            background: white;
+            border-radius: 14px;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 20px;
+        }
+
+        .complaint-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .complaint-info {
+            color: #666;
+            margin: 5px 0;
+        }
+
+        .complaint-description {
+            margin-top: 12px;
+            color: #444;
+        }
+
+        .status {
+            padding: 8px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            height: fit-content;
+        }
+
+        .pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .in_progress {
+            background: #dbeafe;
+            color: #1d4ed8;
+        }
+
+        .resolved {
+            background: #dcfce7;
+            color: #15803d;
+        }
+
+        .empty-box {
+            background: white;
+            padding: 50px;
+            text-align: center;
+            border-radius: 14px;
+            color: #777;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="dashboard-container">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+        <div class="brand">
+            <h2>Civic Mapping</h2>
+            <span>Admin Portal</span>
+        </div>
+
+        <div class="menu-title">
+            MANAGEMENT
+        </div>
+
+        <nav class="sidebar-menu">
+
+            <a href="{% url 'admin_dashboard' %}" class="menu-item">
+                <span class="menu-icon">⌂</span>
+                <span>Dashboard</span>
+            </a>
+
+            <a href="{% url 'all_complaints' %}" class="menu-item">
+                <span class="menu-icon">▣</span>
+                <span>All Complaints</span>
+            </a>
+
+            <a href="{% url 'pending_issues' %}" class="menu-item">
+                <span class="menu-icon">◷</span>
+                <span>Pending Issues</span>
+            </a>
+
+            <a href="{% url 'in_progress_issues' %}" class="menu-item">
+                <span class="menu-icon">⚙</span>
+                <span>In Progress</span>
+            </a>
+
+            <a href="{% url 'resolved_issues' %}" class="menu-item">
+                <span class="menu-icon">✓</span>
+                <span>Resolved Issues</span>
+            </a>
+
+            <a href="{% url 'admin_dashboard' %}#neighbourhoodMap"
+               class="menu-item">
+                <span class="menu-icon">⌖</span>
+                <span>Map View</span>
+            </a>
+
+            <div class="menu-title second-title">
+                ACCOUNT
+            </div>
+
+            <a href="{% url 'admin_profile' %}" class="menu-item">
+                <span class="menu-icon">♙</span>
+                <span>Profile</span>
+            </a>
+
+        </nav>
+
+        <div class="sidebar-bottom">
+            <a href="{% url 'logout' %}" class="logout">
+                <span>↪</span>
+                <span>Logout</span>
+            </a>
+        </div>
+
+    </aside>
+
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+
+        <div class="complaints-page">
+
+            <div class="page-heading">
+                <h1>{{ page_title }}</h1>
+                <p>Complaints submitted by citizens</p>
+            </div>
+
+            <div class="complaints-list">
+
+                {% for complaint in complaints %}
+
+                <div class="complaint-row">
+
+                    <div>
+
+                        <div class="complaint-title">
+                            {{ complaint.title }}
+                        </div>
+
+                        <div class="complaint-info">
+                            <strong>Category:</strong>
+                            {{ complaint.get_category_display }}
+                        </div>
+
+                        <div class="complaint-info">
+                            <strong>Citizen:</strong>
+                            {{ complaint.user.username }}
+                        </div>
+
+                        <div class="complaint-info">
+                            <strong>Date:</strong>
+                            {{ complaint.created_at|date:"d M Y, h:i A" }}
+                        </div>
+
+                        {% if complaint.address %}
+                        <div class="complaint-info">
+                            <strong>Location:</strong>
+                            {{ complaint.address }}
+                        </div>
+                        {% endif %}
+
+                        <div class="complaint-description">
+                            {{ complaint.description }}
+                        </div>
+
+
+
+                        {% if complaint.photos.all %}
+
+<div class="complaint-photos">
+
+    {% for photo in complaint.photos.all %}
+
+    <img
+        src="{{ photo.image.url }}"
+        alt="Complaint Photo"
+    >
+
+    {% endfor %}
+
+</div>
+
+{% endif %}
+
+
+
+
+
+                    </div>
+
+                    <div>
+                        <span class="status {{ complaint.status }}">
+                            {{ complaint.get_status_display }}
+                        </span>
+                    </div>
+
+                </div>
+
+                {% empty %}
+
+                <div class="empty-box">
+                    <h3>No complaints found</h3>
+                    <p>There are no complaints in this section.</p>
+                </div>
+
+                {% endfor %}
+
+            </div>
+
+        </div>
+
+    </main>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,97 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Admin OTP Verification</title>
+
+    <link rel="stylesheet"
+          href="{% static 'css/login.css' %}">
+</head>
+
+<body>
+
+    <div class="page">
+
+        <div class="brand">
+
+            <div class="brand-icon">
+                🏛️
+            </div>
+
+            <h1>OTP Verification</h1>
+
+            <h2>Admin Management Portal</h2>
+
+            <p>
+                Enter the OTP sent to the registered admin email.
+            </p>
+
+        </div>
+
+
+        <div class="portal-card login-card">
+
+            <form method="POST">
+
+                {% csrf_token %}
+
+                <div class="form-group">
+
+                    <label for="otp">
+                        Enter OTP
+                    </label>
+
+                    <input
+                        type="text"
+                        id="otp"
+                        name="otp"
+                        placeholder="Enter 6-digit OTP"
+                        maxlength="6"
+                        required
+                    >
+
+                </div>
+
+
+                <button type="submit"
+                        class="portal-btn">
+
+                    <span>Verify OTP</span>
+
+                    <span>→</span>
+
+                </button>
+
+            </form>
+
+
+            {% if error %}
+
+            <p class="login-error">
+                {{ error }}
+            </p>
+
+            {% endif %}
+
+
+            <a href="{% url 'admin_login' %}"
+               class="back-link">
+
+                ← Back to Admin Login
+
+            </a>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

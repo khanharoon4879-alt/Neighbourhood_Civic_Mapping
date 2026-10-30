@@ -1,0 +1,138 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>User Login | Civic Mapping</title>
+
+    <link rel="stylesheet"
+          href="{% static 'css/login.css' %}">
+
+</head>
+
+<body>
+
+<div class="page">
+
+    <div class="brand">
+
+        <div class="brand-icon">
+            👤
+        </div>
+
+        <h1>Citizen Login</h1>
+
+        <h2>Neighbourhood Civic Portal</h2>
+
+        <p>
+            Login to report problems, track complaints
+            and explore your neighbourhood map.
+        </p>
+
+    </div>
+
+
+    <div class="portal-card login-card">
+
+        <form method="POST">
+
+            {% csrf_token %}
+
+
+            <!-- USERNAME -->
+
+            <div class="form-group">
+
+                <label for="username">
+                    Username
+                </label>
+
+                <input
+                    type="text"
+                    id="username"
+                    name="username"
+                    placeholder="Enter your username"
+                    required
+                >
+
+            </div>
+
+
+            <!-- EMAIL -->
+
+            <div class="form-group">
+
+                <label for="email">
+                    Email Address
+                </label>
+
+                <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    placeholder="Enter your registered email"
+                    required
+                >
+
+            </div>
+
+
+            <!-- PASSWORD -->
+
+            <div class="form-group">
+
+                <label for="password">
+                    Password
+                </label>
+
+                <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    placeholder="Enter your password"
+                    required
+                >
+
+            </div>
+
+
+            <!-- SEND OTP -->
+
+            <button type="submit" class="portal-btn">
+
+                <span>Send OTP</span>
+
+                <span>→</span>
+
+            </button>
+
+        </form>
+
+
+        {% if error %}
+
+        <p class="login-error">
+            {{ error }}
+        </p>
+
+        {% endif %}
+
+
+        <a href="{% url 'home' %}" class="back-link">
+            ← Back to Portal Selection
+        </a>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

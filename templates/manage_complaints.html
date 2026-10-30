@@ -1,0 +1,285 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Manage Complaints | Admin</title>
+
+    <link rel="stylesheet"
+          href="{% static 'css/manage_complaints.css' %}">
+
+</head>
+
+<body>
+
+<header class="topbar">
+
+    <div class="brand">
+
+        <div class="brand-icon">
+            🛡️
+        </div>
+
+        <div>
+            <h2>Neighbourhood Civic Mapping</h2>
+            <p>Admin Panel</p>
+        </div>
+
+    </div>
+
+    <a href="{% url 'admin_dashboard' %}" class="back-btn">
+        ← Dashboard
+    </a>
+
+</header>
+
+
+<main class="container">
+
+    <div class="page-heading">
+
+        <div>
+
+            <h1>Manage Complaints</h1>
+
+            <p>
+                Review citizen complaints and update their status.
+            </p>
+
+        </div>
+
+        <div class="total-box">
+            {{ complaints|length }} Complaints
+        </div>
+
+    </div>
+
+
+    {% if complaints %}
+
+    <div class="complaints-list">
+
+        {% for complaint in complaints %}
+
+        <div class="complaint-card">
+
+
+            <!-- TOP -->
+
+            <div class="complaint-top">
+
+                <div class="complaint-info">
+
+                    <div class="complaint-number">
+                        Complaint #{{ complaint.id }}
+                    </div>
+
+                    <h2>
+                        {{ complaint.title }}
+                    </h2>
+
+                    <span class="category">
+                        {{ complaint.get_category_display }}
+                    </span>
+
+                </div>
+
+
+                <!-- CURRENT STATUS -->
+
+                <div class="current-status
+                    {% if complaint.status == 'resolved' %}
+                        resolved
+                    {% elif complaint.status == 'in_progress' %}
+                        progress
+                    {% else %}
+                        pending
+                    {% endif %}
+                ">
+
+                    {% if complaint.status == "resolved" %}
+                        ✓ Solved
+                    {% elif complaint.status == "in_progress" %}
+                        ↻ In Progress
+                    {% else %}
+                        ⏳ Pending
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+
+            <!-- USER -->
+
+            <div class="user-section">
+
+                <div class="user-icon">
+                    👤
+                </div>
+
+                <div>
+
+                    <span class="label">
+                        Reported By
+                    </span>
+
+                    <strong>
+                        {{ complaint.user.username }}
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <!-- DESCRIPTION -->
+
+            <div class="description">
+
+                <span class="label">
+                    Problem Description
+                </span>
+
+                <p>
+                    {{ complaint.description }}
+                </p>
+
+            </div>
+
+
+            <!-- LOCATION -->
+
+            {% if complaint.address %}
+
+            <div class="location">
+
+                <span class="label">
+                    Location
+                </span>
+
+                <p>
+                    📍 {{ complaint.address }}
+                </p>
+
+            </div>
+
+            {% endif %}
+
+
+            <!-- DATE -->
+
+            <div class="date">
+
+                Reported on:
+
+                {{ complaint.created_at|date:"d M Y, h:i A" }}
+
+            </div>
+
+
+            <!-- STATUS UPDATE -->
+
+            <div class="status-section">
+
+                <div>
+
+                    <span class="label">
+                        Update Complaint Status
+                    </span>
+
+                    <p>
+                        Select the current status of this issue.
+                    </p>
+
+                </div>
+
+
+                <form method="POST"
+                      action="{% url 'update_complaint_status' complaint.id %}"
+                      class="status-form">
+
+                    {% csrf_token %}
+
+                    <select name="status"
+                            onchange="this.form.submit()">
+
+                        <option value="pending"
+                            {% if complaint.status == "pending" %}
+                                selected
+                            {% endif %}>
+                            ⏳ Pending
+                        </option>
+
+                        <option value="in_progress"
+                            {% if complaint.status == "in_progress" %}
+                                selected
+                            {% endif %}>
+                            ↻ In Progress
+                        </option>
+
+                        <option value="resolved"
+                            {% if complaint.status == "resolved" %}
+                                selected
+                            {% endif %}>
+                            ✓ Solved
+                        </option>
+
+                    </select>
+
+                </form>
+
+            </div>
+
+
+            <!-- SUCCESS MESSAGE -->
+
+            {% if complaint.status == "resolved" %}
+
+            <div class="resolved-message">
+
+                ✓ This complaint has been marked as solved.
+                The user will see the solved status.
+
+            </div>
+
+            {% endif %}
+
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+    {% else %}
+
+
+    <div class="empty-state">
+
+        <div class="empty-icon">
+            ✓
+        </div>
+
+        <h2>No Complaints Found</h2>
+
+        <p>
+            There are currently no citizen complaints to manage.
+        </p>
+
+    </div>
+
+
+    {% endif %}
+
+</main>
+
+</body>
+
+</html>

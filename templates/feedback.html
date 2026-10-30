@@ -1,0 +1,216 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Give Feedback | Civic Mapping</title>
+
+    <link rel="stylesheet" href="{% static 'css/feedback.css' %}">
+</head>
+
+<body>
+
+<div class="feedback-page">
+
+    <!-- Back Button -->
+    <a href="{% url 'my_complaints' %}" class="back-btn">
+        ← Back to My Complaints
+    </a>
+
+    <!-- Main Card -->
+    <div class="feedback-card">
+
+        <!-- Header -->
+        <div class="feedback-header">
+
+            <div class="success-icon">
+                ✓
+            </div>
+
+            <span class="small-label">
+                COMPLAINT RESOLVED
+            </span>
+
+            <h1>How was your experience?</h1>
+
+            <p>
+                Your feedback helps us improve civic services
+                and serve your neighbourhood better.
+            </p>
+
+        </div>
+
+
+        <!-- Complaint Information -->
+        <div class="complaint-info">
+
+            <div class="info-item">
+                <span>Complaint</span>
+                <strong>{{ complaint.title }}</strong>
+            </div>
+
+            <div class="info-item">
+                <span>Category</span>
+                <strong>{{ complaint.get_category_display }}</strong>
+            </div>
+
+            <div class="info-item">
+                <span>Status</span>
+                <strong class="resolved-status">
+                    ✓ Resolved
+                </strong>
+            </div>
+
+        </div>
+
+
+        <!-- Feedback Form -->
+        <form method="POST">
+
+            {% csrf_token %}
+
+            <!-- Rating -->
+            <div class="rating-section">
+
+                <h2>Rate the resolution</h2>
+
+                <p>
+                    How satisfied are you with how your complaint was handled?
+                </p>
+
+                <div class="stars">
+
+                    <input type="radio" id="star5" name="rating" value="5">
+                    <label for="star5">★</label>
+
+                    <input type="radio" id="star4" name="rating" value="4">
+                    <label for="star4">★</label>
+
+                    <input type="radio" id="star3" name="rating" value="3">
+                    <label for="star3">★</label>
+
+                    <input type="radio" id="star2" name="rating" value="2">
+                    <label for="star2">★</label>
+
+                    <input type="radio" id="star1" name="rating" value="1">
+                    <label for="star1">★</label>
+
+                </div>
+
+                <div class="rating-text">
+                    Select a rating
+                </div>
+
+            </div>
+
+
+            <!-- Feedback Message -->
+            <div class="message-section">
+
+                <label for="feedback">
+                    Tell us more
+                    <span>Optional</span>
+                </label>
+
+                <textarea
+                    id="feedback"
+                    name="feedback"
+                    rows="5"
+                    maxlength="500"
+                    placeholder="Tell us about your experience... What went well? What could be improved?"
+                ></textarea>
+
+                <div class="textarea-footer">
+                    <span>Your feedback is valuable to us.</span>
+                    <span>Max 500 characters</span>
+                </div>
+
+            </div>
+
+
+            <!-- Quick Feedback -->
+            <div class="quick-section">
+
+                <h3>What did you like?</h3>
+
+                <div class="quick-options">
+
+                    <label class="quick-option">
+                        <input type="checkbox" name="tags" value="quick">
+                        <span>⚡ Quick Resolution</span>
+                    </label>
+
+                    <label class="quick-option">
+                        <input type="checkbox" name="tags" value="helpful">
+                        <span>👍 Helpful Response</span>
+                    </label>
+
+                    <label class="quick-option">
+                        <input type="checkbox" name="tags" value="quality">
+                        <span>✓ Good Quality</span>
+                    </label>
+
+                    <label class="quick-option">
+                        <input type="checkbox" name="tags" value="communication">
+                        <span>💬 Good Communication</span>
+                    </label>
+
+                </div>
+
+            </div>
+
+
+            <!-- Submit -->
+            <button type="submit" class="submit-feedback">
+                Submit Feedback
+                <span>→</span>
+            </button>
+
+        </form>
+
+
+        <!-- Privacy Note -->
+        <div class="privacy-note">
+            🔒 Your feedback is securely stored and used only
+            to improve civic services.
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+const stars = document.querySelectorAll('.stars label');
+const ratingText = document.querySelector('.rating-text');
+
+const ratingMessages = {
+    1: "Very dissatisfied",
+    2: "Dissatisfied",
+    3: "It's okay",
+    4: "Satisfied",
+    5: "Very satisfied"
+};
+
+stars.forEach(function(star) {
+
+    star.addEventListener('click', function() {
+
+        const rating = this.previousElementSibling.value;
+
+        ratingText.textContent = ratingMessages[rating];
+
+    });
+
+});
+
+</script>
+
+</body>
+
+</html>

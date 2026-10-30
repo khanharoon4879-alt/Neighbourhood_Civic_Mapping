@@ -1,0 +1,165 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Admin Login | Civic Mapping</title>
+
+    <link rel="stylesheet"
+          href="{% static 'css/login.css' %}">
+
+</head>
+
+<body>
+
+    <!-- CREATE ADMIN ACCOUNT -->
+
+    <div class="top-create-account">
+
+        <a
+            href="{% url 'admin_create_account' %}"
+            class="create-account-btn"
+        >
+            Create Account
+        </a>
+
+    </div>
+
+
+    <div class="page">
+
+
+        <!-- BRAND -->
+
+        <div class="brand">
+
+            <div class="brand-icon">
+                🏛️
+            </div>
+
+            <h1>Corporator Login</h1>
+
+            <h2>Admin Management Portal</h2>
+
+            <p>
+                Manage civic complaints, monitor progress
+                and oversee neighbourhood infrastructure.
+            </p>
+
+        </div>
+
+
+        <!-- LOGIN CARD -->
+
+        <div class="portal-card login-card">
+
+            <form method="POST">
+
+                {% csrf_token %}
+
+
+                <!-- USERNAME -->
+
+                <div class="form-group">
+
+                    <label for="username">
+                        Admin Username
+                    </label>
+
+                    <input
+                        type="text"
+                        id="username"
+                        name="username"
+                        placeholder="Enter admin username"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- EMAIL -->
+
+                <div class="form-group">
+
+                    <label for="email">
+                        Email Address
+                    </label>
+
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        placeholder="Enter admin email address"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- PASSWORD -->
+
+                <div class="form-group">
+
+                    <label for="password">
+                        Password
+                    </label>
+
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        placeholder="Enter admin password"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- SEND OTP -->
+
+                <button
+                    type="submit"
+                    class="portal-btn"
+                >
+
+                    <span>Send OTP</span>
+
+                    <span>→</span>
+
+                </button>
+
+            </form>
+
+
+            <!-- ERROR -->
+
+            {% if error %}
+
+            <p class="login-error">
+                {{ error }}
+            </p>
+
+            {% endif %}
+
+
+            <!-- BACK -->
+
+            <a
+                href="{% url 'home' %}"
+                class="back-link"
+            >
+                ← Back to Portal Selection
+            </a>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,152 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>My Profile | Civic Mapping</title>
+
+    <link rel="stylesheet"
+          href="{% static 'css/user_profile.css' %}">
+
+</head>
+
+<body>
+
+<div class="profile-page">
+
+    <header class="topbar">
+
+        <div class="brand">
+
+            <div class="brand-icon">
+                🏙️
+            </div>
+
+            <div>
+                <h2>Civic Mapping</h2>
+                <span>Citizen Portal</span>
+            </div>
+
+        </div>
+
+        <a href="{% url 'user_dashboard' %}"
+           class="back-btn">
+            ← Dashboard
+        </a>
+
+    </header>
+
+
+    <main class="profile-container">
+
+        <div class="profile-heading">
+
+            <h1>My Profile</h1>
+
+            <p>
+                View your account information.
+            </p>
+
+        </div>
+
+
+        <div class="profile-card">
+
+            <div class="profile-header">
+
+                <div class="large-avatar">
+                    {{ request.user.username|first|upper }}
+                </div>
+
+                <div>
+
+                    <h2>
+                        {{ request.user.username }}
+                    </h2>
+
+                    <span>
+                        Citizen / Resident
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="profile-details">
+
+                <div class="detail">
+
+                    <span>Username</span>
+
+                    <strong>
+                        {{ request.user.username }}
+                    </strong>
+
+                </div>
+
+
+                <div class="detail">
+
+                    <span>Email</span>
+
+                    <strong>
+                        {% if request.user.email %}
+                            {{ request.user.email }}
+                        {% else %}
+                            Not provided
+                        {% endif %}
+                    </strong>
+
+                </div>
+
+
+                <div class="detail">
+
+                    <span>Account Created</span>
+
+                    <strong>
+                        {{ request.user.date_joined|date:"d M Y" }}
+                    </strong>
+
+                </div>
+
+
+                <div class="detail">
+
+                    <span>Account Status</span>
+
+                    <strong class="active">
+                        ● Active
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div class="profile-footer">
+
+                <a href="{% url 'user_dashboard' %}"
+                   class="dashboard-btn">
+                    Back to Dashboard
+                </a>
+
+            </div>
+
+        </div>
+
+    </main>
+
+</div>
+
+</body>
+
+</html>

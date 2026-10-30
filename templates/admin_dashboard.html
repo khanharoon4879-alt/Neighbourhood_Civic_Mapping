@@ -1,0 +1,796 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Admin Dashboard | Civic Mapping</title>
+
+    <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+
+    <style>
+        #neighbourhoodMap {
+            width: 100%;
+            height: 420px;
+            border-radius: 14px;
+            overflow: hidden;
+        }
+
+        .map-area {
+            width: 100%;
+            height: 420px;
+            overflow: hidden;
+            border-radius: 14px;
+        }
+    </style>
+
+</head>
+
+<body>
+
+<div class="dashboard">
+
+    <!-- ================= SIDEBAR ================= -->
+
+    <aside class="sidebar">
+
+        <div class="brand">
+
+            <div class="brand-icon">
+                🏙️
+            </div>
+
+            <div>
+                <h2>Civic Mapping</h2>
+                <span>Admin Portal</span>
+            </div>
+
+        </div>
+
+
+        <div class="menu-title">
+    MANAGEMENT
+</div>
+
+<nav class="sidebar-menu">
+
+    <a href="{% url 'admin_dashboard' %}"
+       class="menu-item active">
+
+        <span class="menu-icon">⌂</span>
+        <span>Dashboard</span>
+
+    </a>
+
+
+    <a href="{% url 'all_complaints' %}" class="menu-item">
+    <span class="menu-icon">▣</span>
+    <span>All Complaints</span>
+</a>
+
+
+    <a href="{% url 'admin_dashboard' %}?status=pending"
+       class="menu-item">
+
+        <span class="menu-icon">◷</span>
+        <span>Pending Issues</span>
+
+    </a>
+
+
+    <a href="{% url 'admin_dashboard' %}?status=in_progress"
+       class="menu-item">
+
+        <span class="menu-icon">⚙</span>
+        <span>In Progress</span>
+
+    </a>
+
+
+    <a href="{% url 'admin_dashboard' %}?status=resolved"
+       class="menu-item">
+
+        <span class="menu-icon">✓</span>
+        <span>Resolved Issues</span>
+
+    </a>
+
+    <a href="{% url 'admin_feedback' %}" class="menu-item">
+    <span class="menu-icon">★</span>
+    <span>Feedbacks</span>
+</a>
+
+
+    <a href="{% url 'admin_dashboard' %}#neighbourhoodMap"
+       class="menu-item">
+
+        <span class="menu-icon">⌖</span>
+        <span>Map View</span>
+
+    </a>
+
+
+    <div class="menu-title second-title">
+        ACCOUNT
+    </div>
+
+
+    <a href="{% url 'admin_profile' %}"
+       class="menu-item">
+
+        <span class="menu-icon">♙</span>
+        <span>Profile</span>
+
+    </a>
+
+</nav>
+
+
+<div class="sidebar-bottom">
+
+    <a href="{% url 'logout' %}" class="logout">
+
+        <span>↪</span>
+        <span>Logout</span>
+
+    </a>
+
+</div>
+
+    </aside>
+
+
+    <!-- ================= MAIN CONTENT ================= -->
+
+    <main class="main-content">
+
+
+        <!-- ================= TOPBAR ================= -->
+
+        <header class="topbar">
+
+            <div class="welcome">
+
+                <p class="small-heading">
+                    ADMIN DASHBOARD
+                </p>
+
+                <h1>
+                    Welcome back, Admin 👋
+                </h1>
+
+                <p>
+                    Monitor and manage civic issues in your neighbourhood.
+                </p>
+
+            </div>
+
+
+            <div class="topbar-right">
+
+                <button class="notification-btn">
+                    🔔
+                    <span></span>
+                </button>
+
+
+                <div class="user-profile">
+
+                    <div class="avatar">
+                        A
+                    </div>
+
+                    <div class="user-info">
+
+                        <strong>
+                            Admin
+                        </strong>
+
+                        <span>
+                            Administrator
+                        </span>
+
+                    </div>
+
+                    <span class="profile-arrow">
+                        ▾
+                    </span>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- ================= QUICK STATS ================= -->
+
+        <section class="stats-grid">
+
+    <!-- TOTAL -->
+
+    <div class="stat-card">
+
+        <div class="stat-icon purple">
+            ▣
+        </div>
+
+        <div class="stat-content">
+
+            <span>
+                Total Complaints
+            </span>
+
+            <strong>
+                {{ total_complaints }}
+            </strong>
+
+            <small>
+                All reported issues
+            </small>
+
+        </div>
+
+    </div>
+
+
+    <!-- PENDING -->
+
+    <div class="stat-card">
+
+        <div class="stat-icon orange">
+            ◷
+        </div>
+
+        <div class="stat-content">
+
+            <span>
+                Pending Issues
+            </span>
+
+            <strong>
+                {{ pending }}
+            </strong>
+
+            <small>
+                Awaiting action
+            </small>
+
+        </div>
+
+    </div>
+
+
+    <!-- IN PROGRESS -->
+
+    <div class="stat-card">
+
+        <div class="stat-icon blue">
+            ⚙
+        </div>
+
+        <div class="stat-content">
+
+            <span>
+                In Progress
+            </span>
+
+            <strong>
+                {{ in_progress }}
+            </strong>
+
+            <small>
+                Currently being handled
+            </small>
+
+        </div>
+
+    </div>
+
+
+    <!-- RESOLVED -->
+
+    <div class="stat-card">
+
+        <div class="stat-icon green">
+            ✓
+        </div>
+
+        <div class="stat-content">
+
+            <span>
+                Resolved
+            </span>
+
+            <strong>
+                {{ resolved }}
+            </strong>
+
+            <small>
+                Successfully resolved
+            </small>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+        <!-- ================= MAP + MANAGEMENT ================= -->
+
+        <section class="main-grid">
+
+
+            <!-- ================= GOOGLE MAP ================= -->
+
+            <div class="map-card">
+
+                <div class="card-header">
+
+                    <div>
+
+                        <h2>
+                            Civic Issues Map
+                        </h2>
+
+                        <p>
+                            Monitor reported problems across your neighbourhood.
+                        </p>
+
+                    </div>
+
+
+                    <button class="view-map-btn">
+                        Full Map →
+                    </button>
+
+                </div>
+
+
+                <div class="map-area">
+
+                    <div id="neighbourhoodMap"></div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ================= ADMIN ACTION CARD ================= -->
+
+            <div class="report-card">
+
+                <div class="report-icon">
+                    ⚠
+                </div>
+
+
+                <span class="report-label">
+                    ISSUE MANAGEMENT
+                </span>
+
+
+                <h2>
+                    Manage Civic Issues
+                </h2>
+
+
+                <p>
+                    Review citizen complaints, assign issues to
+                    departments and update their status.
+                </p>
+
+
+                <div class="report-features">
+
+                    <div>
+
+                        <span>
+                            🔍
+                        </span>
+
+                        <p>
+                            Review
+                        </p>
+
+                    </div>
+
+
+                    <div>
+
+                        <span>
+                            👥
+                        </span>
+
+                        <p>
+                            Assign
+                        </p>
+
+                    </div>
+
+
+                    <div>
+
+                        <span>
+                            ✓
+                        </span>
+
+                        <p>
+                            Resolve
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <a href="{% url 'manage_complaints' %}" class="report-btn">
+    Manage Complaints
+    <span>→</span>
+</a>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= RECENT COMPLAINTS ================= -->
+
+        <section class="complaints-card">
+
+            <div class="card-header">
+
+                <div>
+
+                    <h2>
+                        Recent Civic Complaints
+                    </h2>
+
+                    <p>
+                        Latest issues reported by citizens.
+                    </p>
+
+                </div>
+
+
+                <a href="#">
+                    View All →
+                </a>
+
+            </div>
+
+
+            <div class="complaints-list">
+
+    {% for complaint in complaints %}
+
+    <div class="complaint-row">
+
+        <div class="complaint-main">
+
+            <div class="complaint-icon road">
+                {% if complaint.category == "road" %}
+                    🛣️
+                {% elif complaint.category == "streetlight" %}
+                    💡
+                {% elif complaint.category == "garbage" %}
+                    🗑️
+                {% elif complaint.category == "water" %}
+                    💧
+                {% elif complaint.category == "drainage" %}
+                    🌊
+                {% else %}
+                    ⚠️
+                {% endif %}
+            </div>
+
+            <div>
+
+                <strong>
+                    {{ complaint.title }}
+                </strong>
+
+                <span>
+                    {{ complaint.get_category_display }}
+                    · Reported by {{ complaint.user.username }}
+                    · {{ complaint.created_at|date:"d M Y" }}
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- STATUS DROPDOWN -->
+
+        <form method="POST"
+              action="{% url 'update_complaint_status' complaint.id %}"
+              class="status-form">
+
+            {% csrf_token %}
+
+            <select name="status"
+                    onchange="this.form.submit()">
+
+                <option value="pending"
+                    {% if complaint.status == "pending" %}selected{% endif %}>
+                    Pending
+                </option>
+
+                <option value="in_progress"
+                    {% if complaint.status == "in_progress" %}selected{% endif %}>
+                    In Progress
+                </option>
+
+                <option value="resolved"
+                    {% if complaint.status == "resolved" %}selected{% endif %}>
+                    Resolved
+                </option>
+
+            </select>
+
+        </form>
+
+
+        <!-- CURRENT STATUS -->
+
+        <div class="complaint-status
+            {% if complaint.status == 'resolved' %}
+                resolved
+            {% elif complaint.status == 'in_progress' %}
+                progress
+            {% else %}
+                reported
+            {% endif %}">
+
+            <i></i>
+
+            {% if complaint.status == "resolved" %}
+                ✓ Resolved
+            {% elif complaint.status == "in_progress" %}
+                ↻ In Progress
+            {% else %}
+                ⏳ Pending
+            {% endif %}
+
+        </div>
+
+
+        <div class="complaint-arrow">
+            →
+        </div>
+
+    </div>
+
+    {% empty %}
+
+    <div class="complaint-row">
+
+        <div class="complaint-main">
+
+            <div class="complaint-icon road">
+                ℹ️
+            </div>
+
+            <div>
+                <strong>No complaints yet</strong>
+
+                <span>
+                    No civic complaints have been submitted.
+                </span>
+            </div>
+
+        </div>
+
+    </div>
+
+    {% endfor %}
+
+</div>
+
+        </section>
+
+
+        <!-- ================= ADMIN SUMMARY ================= -->
+
+        <section class="community-card">
+
+        
+
+        </section>
+
+
+    </main>
+
+</div>
+
+
+<!-- =====================================================
+     DJANGO COMPLAINT DATA
+===================================================== -->
+
+{{ map_complaints|json_script:"admin-complaints-data" }}
+
+
+<!-- =====================================================
+     GOOGLE MAPS
+===================================================== -->
+
+<script>
+
+function initMap() {
+
+    const mapElement = document.getElementById("neighbourhoodMap");
+
+    if (!mapElement) {
+        console.error("Map container not found.");
+        return;
+    }
+
+    const map = new google.maps.Map(mapElement, {
+        center: {
+            lat: 19.0760,
+            lng: 72.8777
+        },
+        zoom: 13,
+        mapTypeControl: true,
+        streetViewControl: false,
+        fullscreenControl: true
+    });
+
+    const dataElement = document.getElementById(
+        "admin-complaints-data"
+    );
+
+    if (!dataElement) {
+        console.error("Complaint map data not found.");
+
+        return;
+    }
+
+    let complaints = [];
+
+    try {
+        complaints = JSON.parse(
+            dataElement.textContent
+        );
+    } catch (error) {
+
+        console.error(
+            "Could not parse complaint data:",
+            error
+        );
+
+        return;
+    }
+
+    const bounds =
+        new google.maps.LatLngBounds();
+
+    let validMarkerCount = 0;
+
+    const infoWindow =
+        new google.maps.InfoWindow();
+
+
+    complaints.forEach(function (complaint) {
+
+        const lat = Number(
+            complaint.latitude
+        );
+
+        const lng = Number(
+            complaint.longitude
+        );
+
+
+        if (
+            !Number.isFinite(lat) ||
+            !Number.isFinite(lng)
+        ) {
+            return;
+        }
+
+
+        if (
+            lat < -90 ||
+            lat > 90 ||
+            lng < -180 ||
+            lng > 180
+        ) {
+            return;
+        }
+
+
+        const position = {
+            lat: lat,
+            lng: lng
+        };
+
+
+        const marker =
+            new google.maps.Marker({
+                position: position,
+                map: map,
+                title: complaint.title
+            });
+
+
+        bounds.extend(position);
+
+        validMarkerCount++;
+
+
+        marker.addListener(
+            "click",
+            function () {
+
+                const content = `
+                    <div style="min-width:220px;">
+                        <h3>${complaint.title}</h3>
+                        <p>
+                            <strong>Category:</strong>
+                            ${complaint.category}
+                        </p>
+                        <p>
+                            <strong>Status:</strong>
+                            ${complaint.status}
+                        </p>
+                        <p>
+                            ${complaint.description}
+                        </p>
+                    </div>
+                `;
+
+                infoWindow.setContent(content);
+
+                infoWindow.open({
+                    anchor: marker,
+                    map: map
+                });
+
+            }
+        );
+
+    });
+
+
+    if (validMarkerCount === 1) {
+
+        map.setCenter(
+            bounds.getCenter()
+        );
+
+        map.setZoom(15);
+
+    }
+
+    else if (validMarkerCount > 1) {
+
+        map.fitBounds(bounds);
+
+    }
+
+}
+
+</script>
+
+
+<!-- =====================================================
+     GOOGLE MAPS API
+===================================================== -->
+
+<!-- <script -->
+    async
+    defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAcz0yo2ML013uiOSQCmh4EujbUSRRNObU&callback=initMap">
+<!-- </script> -->
+
+
+</body>
+
+</html>

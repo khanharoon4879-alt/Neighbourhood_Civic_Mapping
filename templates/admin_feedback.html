@@ -1,0 +1,109 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Feedbacks | Admin</title>
+
+    <link rel="stylesheet" href="{% static 'css/admin_feedback.css' %}">
+</head>
+
+<body>
+
+<div class="page">
+
+    <div class="top-bar">
+        <div>
+            <h1>Customer Feedback</h1>
+            <p>Feedback received from citizens after complaint resolution.</p>
+        </div>
+
+        <a href="{% url 'admin_dashboard' %}" class="back-btn">
+            ← Dashboard
+        </a>
+    </div>
+
+
+    <div class="feedback-container">
+
+        {% for feedback in feedbacks %}
+
+        <div class="feedback-card">
+
+            <div class="feedback-header">
+
+                <div class="user-info">
+
+                    <div class="avatar">
+                        {{ feedback.user.username|first|upper }}
+                    </div>
+
+                    <div>
+                        <h3>{{ feedback.user.username }}</h3>
+                        <span>{{ feedback.created_at|date:"d M Y, h:i A" }}</span>
+                    </div>
+
+                </div>
+
+                <div class="rating">
+                    {% if feedback.rating >= 1 %}★{% endif %}
+                    {% if feedback.rating >= 2 %}★{% endif %}
+                    {% if feedback.rating >= 3 %}★{% endif %}
+                    {% if feedback.rating >= 4 %}★{% endif %}
+                    {% if feedback.rating >= 5 %}★{% endif %}
+
+                    <small>{{ feedback.rating }}/5</small>
+                </div>
+
+            </div>
+
+
+            <div class="complaint-info">
+
+                <span class="label">Complaint</span>
+
+                <h2>{{ feedback.complaint.title }}</h2>
+
+                <span class="category">
+                    {{ feedback.complaint.get_category_display }}
+                </span>
+
+            </div>
+
+
+            {% if feedback.feedback %}
+            <div class="message">
+                <span class="label">Feedback</span>
+                <p>{{ feedback.feedback }}</p>
+            </div>
+            {% endif %}
+
+
+            {% if feedback.tags %}
+<div class="tags">
+    <span>{{ feedback.tags }}</span>
+</div>
+{% endif %}
+
+        </div>
+
+        {% empty %}
+
+        <div class="empty">
+            <div>★</div>
+            <h2>No Feedback Yet</h2>
+            <p>Customer feedback will appear here after complaints are resolved.</p>
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
+</body>
+</html>
+

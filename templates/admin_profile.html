@@ -1,0 +1,154 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Admin Profile | Civic Mapping</title>
+
+    <link rel="stylesheet"
+          href="{% static 'css/admin_profile.css' %}">
+
+</head>
+
+<body>
+
+<div class="profile-page">
+
+    <div class="profile-card">
+
+        <div class="profile-header">
+
+            <div class="profile-avatar">
+                👤
+            </div>
+
+            <div>
+
+                <h1>Admin Profile</h1>
+
+                <p>
+                    Manage your administrator information
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <form method="POST">
+
+            {% csrf_token %}
+
+
+            <div class="form-row">
+
+                <div class="form-group">
+
+                    <label>First Name</label>
+
+                    <input
+                        type="text"
+                        name="first_name"
+                        value="{{ admin.first_name }}"
+                        placeholder="Enter first name"
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>Last Name</label>
+
+                    <input
+                        type="text"
+                        name="last_name"
+                        value="{{ admin.last_name }}"
+                        placeholder="Enter last name"
+                    >
+
+                </div>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Username</label>
+
+                <input
+                    type="text"
+                    value="{{ admin.username }}"
+                    readonly
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Email Address</label>
+
+                <input
+                    type="email"
+                    name="email"
+                    value="{{ admin.email }}"
+                    placeholder="Enter email address"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Role</label>
+
+                <input
+                    type="text"
+                    value="Administrator"
+                    readonly
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Member Since</label>
+
+                <input
+                    type="text"
+                    value="{{ admin.date_joined|date:'d M Y' }}"
+                    readonly
+                >
+
+            </div>
+
+
+            <button type="submit" class="save-btn">
+                Save Profile
+            </button>
+
+        </form>
+
+
+        <a href="{% url 'admin_dashboard' %}"
+           class="back-link">
+            ← Back to Admin Dashboard
+        </a>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

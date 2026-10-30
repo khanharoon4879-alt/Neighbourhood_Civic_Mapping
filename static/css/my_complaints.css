@@ -1,0 +1,810 @@
+/* =====================================================
+   CIVIC MAPPING - MY COMPLAINTS
+   ===================================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --bg: #080912;
+    --card: #111321;
+    --card-light: #15182a;
+
+    --purple: #7c3aed;
+    --purple-light: #a78bfa;
+
+    --text: #f5f5f7;
+    --muted: #8f94a8;
+
+    --border: rgba(255, 255, 255, 0.08);
+
+    --green: #22c55e;
+    --yellow: #f59e0b;
+    --blue: #3b82f6;
+}
+
+
+/* =====================================================
+   BODY
+   ===================================================== */
+
+body {
+    font-family: "Segoe UI", Arial, sans-serif;
+
+    background:
+        radial-gradient(
+            circle at 80% 5%,
+            rgba(124, 58, 237, 0.10),
+            transparent 28%
+        ),
+        radial-gradient(
+            circle at 15% 90%,
+            rgba(79, 70, 229, 0.05),
+            transparent 25%
+        ),
+        var(--bg);
+
+    color: var(--text);
+
+    min-height: 100vh;
+}
+
+
+/* =====================================================
+   HEADER
+   ===================================================== */
+
+.topbar {
+    height: 76px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0 42px;
+
+    background: rgba(13, 15, 29, 0.92);
+
+    border-bottom: 1px solid var(--border);
+
+    backdrop-filter: blur(14px);
+
+    position: sticky;
+    top: 0;
+
+    z-index: 20;
+}
+
+
+/* BRAND */
+
+.brand {
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+}
+
+.brand-icon {
+    width: 43px;
+    height: 43px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background:
+        linear-gradient(
+            135deg,
+            #7c3aed,
+            #4f46e5
+        );
+
+    border-radius: 13px;
+
+    font-size: 20px;
+
+    box-shadow:
+        0 8px 25px rgba(124, 58, 237, 0.25);
+}
+
+.brand h2 {
+    font-size: 15px;
+    font-weight: 700;
+
+    color: #f5f5f7;
+}
+
+.brand p {
+    margin-top: 3px;
+
+    color: var(--purple-light);
+
+    font-size: 10px;
+
+    letter-spacing: 0.5px;
+}
+
+
+/* BACK BUTTON */
+
+.back-btn {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+
+    padding: 9px 14px;
+
+    color: #b9a2ff;
+
+    background: rgba(124, 58, 237, 0.08);
+
+    border: 1px solid rgba(124, 58, 237, 0.18);
+
+    border-radius: 9px;
+
+    text-decoration: none;
+
+    font-size: 11px;
+    font-weight: 600;
+
+    transition: 0.25s ease;
+}
+
+.back-btn:hover {
+    color: #ffffff;
+
+    background: rgba(124, 58, 237, 0.17);
+
+    border-color: rgba(124, 58, 237, 0.35);
+
+    transform: translateX(-2px);
+}
+
+
+/* =====================================================
+   MAIN
+   ===================================================== */
+
+.container {
+    width: 100%;
+
+    max-width: 1250px;
+
+    margin: 0 auto;
+
+    padding: 34px 38px 60px;
+}
+
+
+/* =====================================================
+   PAGE HEADING
+   ===================================================== */
+
+.page-heading {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 25px;
+}
+
+.page-heading h1 {
+    font-size: 26px;
+
+    font-weight: 650;
+
+    letter-spacing: -0.4px;
+}
+
+.page-heading p {
+    margin-top: 6px;
+
+    color: var(--muted);
+
+    font-size: 11px;
+}
+
+
+/* REPORT BUTTON */
+
+.report-btn {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 12px;
+
+    padding: 11px 16px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #7c3aed,
+            #5b21b6
+        );
+
+    color: #ffffff;
+
+    border-radius: 9px;
+
+    text-decoration: none;
+
+    font-size: 11px;
+
+    font-weight: 600;
+
+    box-shadow:
+        0 7px 20px rgba(124, 58, 237, 0.20);
+
+    transition: 0.25s ease;
+}
+
+.report-btn:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 10px 27px rgba(124, 58, 237, 0.32);
+}
+
+
+/* =====================================================
+   COMPLAINT LIST
+   ===================================================== */
+
+.complaints-list {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 13px;
+}
+
+
+/* =====================================================
+   COMPLAINT CARD
+   ===================================================== */
+
+.complaint-card {
+    position: relative;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255, 255, 255, 0.045),
+            rgba(255, 255, 255, 0.018)
+        );
+
+    border: 1px solid var(--border);
+
+    border-radius: 15px;
+
+    padding: 19px 20px;
+
+    overflow: hidden;
+
+    transition:
+        transform 0.25s ease,
+        border-color 0.25s ease,
+        background 0.25s ease;
+}
+
+
+/* PURPLE SIDE LINE */
+
+.complaint-card::before {
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+    top: 0;
+    bottom: 0;
+
+    width: 3px;
+
+    background:
+        linear-gradient(
+            180deg,
+            #8b5cf6,
+            #5b21b6
+        );
+
+    opacity: 0.8;
+}
+
+.complaint-card:hover {
+    transform: translateY(-2px);
+
+    border-color: rgba(167, 139, 250, 0.20);
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255, 255, 255, 0.055),
+            rgba(255, 255, 255, 0.025)
+        );
+}
+
+
+/* =====================================================
+   COMPLAINT TOP
+   ===================================================== */
+
+.complaint-top {
+    display: flex;
+
+    align-items: flex-start;
+
+    justify-content: space-between;
+
+    gap: 20px;
+}
+
+.complaint-top h2 {
+    font-size: 14px;
+
+    font-weight: 650;
+
+    color: var(--text);
+
+    margin-bottom: 7px;
+}
+
+
+/* CATEGORY */
+
+.category {
+    display: inline-block;
+
+    padding: 5px 9px;
+
+    border-radius: 7px;
+
+    background: rgba(124, 58, 237, 0.10);
+
+    border: 1px solid rgba(124, 58, 237, 0.14);
+
+    color: #b9a2ff;
+
+    font-size: 9px;
+
+    font-weight: 600;
+}
+
+
+/* =====================================================
+   STATUS
+   ===================================================== */
+
+.status {
+    display: flex;
+
+    align-items: center;
+
+    gap: 6px;
+
+    padding: 6px 10px;
+
+    border-radius: 20px;
+
+    font-size: 9px;
+
+    font-weight: 600;
+
+    white-space: nowrap;
+}
+
+.status-icon {
+    font-size: 10px;
+}
+
+
+/* PENDING */
+
+.status.pending {
+    color: #fbbf24;
+
+    background: rgba(245, 158, 11, 0.09);
+
+    border: 1px solid rgba(245, 158, 11, 0.12);
+}
+
+
+/* IN PROGRESS */
+
+.status.in-progress {
+    color: #60a5fa;
+
+    background: rgba(59, 130, 246, 0.09);
+
+    border: 1px solid rgba(59, 130, 246, 0.12);
+}
+
+
+/* RESOLVED */
+
+.status.resolved {
+    color: #4ade80;
+
+    background: rgba(34, 197, 94, 0.09);
+
+    border: 1px solid rgba(34, 197, 94, 0.12);
+}
+
+
+/* =====================================================
+   DESCRIPTION
+   ===================================================== */
+
+.complaint-description {
+    margin-top: 14px;
+
+    padding: 12px 13px;
+
+    background: rgba(255, 255, 255, 0.025);
+
+    border: 1px solid rgba(255, 255, 255, 0.045);
+
+    border-radius: 9px;
+}
+
+.complaint-description p {
+    color: #8f94a8;
+
+    font-size: 10px;
+
+    line-height: 1.6;
+}
+
+
+/* =====================================================
+   COMPLAINT PHOTOS
+   ===================================================== */
+
+.complaint-photos {
+    display: flex;
+
+    gap: 12px;
+
+    flex-wrap: wrap;
+
+    margin-top: 16px;
+}
+
+.complaint-photos img {
+    width: 130px;
+
+    height: 95px;
+
+    object-fit: cover;
+
+    border-radius: 10px;
+
+    border: 1px solid rgba(255, 255, 255, 0.10);
+
+    transition: 0.2s ease;
+}
+
+.complaint-photos img:hover {
+    transform: translateY(-3px);
+
+    box-shadow:
+        0 8px 20px rgba(124, 58, 237, 0.25);
+}
+
+
+/* =====================================================
+   DETAILS
+   ===================================================== */
+
+.complaint-details {
+    display: flex;
+
+    align-items: center;
+
+    gap: 45px;
+
+    margin-top: 14px;
+
+    padding-top: 12px;
+
+    border-top: 1px solid rgba(255, 255, 255, 0.055);
+}
+
+.detail {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 4px;
+
+    color: #a0a5b5;
+
+    font-size: 9px;
+}
+
+.detail-label {
+    color: #62677c;
+
+    font-size: 8px;
+
+    font-weight: 700;
+
+    letter-spacing: 0.8px;
+
+    text-transform: uppercase;
+}
+
+
+/* =====================================================
+   FOOTER
+   ===================================================== */
+
+.complaint-footer {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    margin-top: 13px;
+
+    padding-top: 11px;
+
+    border-top: 1px solid rgba(255, 255, 255, 0.055);
+
+    color: #62677c;
+
+    font-size: 8px;
+}
+
+.completed-message {
+    color: #4ade80;
+
+    font-weight: 600;
+}
+
+.progress-message {
+    color: #60a5fa;
+
+    font-weight: 600;
+}
+
+.pending-message {
+    color: #fbbf24;
+
+    font-weight: 600;
+}
+
+
+/* =====================================================
+   EMPTY STATE
+   ===================================================== */
+
+.empty-state {
+    padding: 65px 30px;
+
+    text-align: center;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255, 255, 255, 0.045),
+            rgba(255, 255, 255, 0.018)
+        );
+
+    border: 1px solid var(--border);
+
+    border-radius: 17px;
+}
+
+.empty-icon {
+    width: 58px;
+    height: 58px;
+
+    margin: 0 auto 15px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: rgba(124, 58, 237, 0.12);
+
+    border: 1px solid rgba(124, 58, 237, 0.15);
+
+    border-radius: 15px;
+
+    font-size: 24px;
+}
+
+.empty-state h2 {
+    font-size: 17px;
+
+    margin-bottom: 7px;
+}
+
+.empty-state p {
+    color: var(--muted);
+
+    font-size: 10px;
+
+    margin-bottom: 19px;
+}
+
+
+/* =====================================================
+   RESPONSIVE
+   ===================================================== */
+
+@media (max-width: 750px) {
+
+    .topbar {
+        padding: 0 18px;
+    }
+
+    .container {
+        padding: 25px 18px 45px;
+    }
+
+    .page-heading {
+        align-items: flex-start;
+
+        flex-direction: column;
+
+        gap: 16px;
+    }
+
+    .report-btn {
+        width: 100%;
+    }
+
+    .complaint-top {
+        flex-direction: column;
+
+        gap: 12px;
+    }
+
+    .complaint-details {
+        flex-direction: column;
+
+        align-items: flex-start;
+
+        gap: 11px;
+    }
+
+    .complaint-footer {
+        align-items: flex-start;
+
+        flex-direction: column;
+
+        gap: 7px;
+    }
+
+    .complaint-photos img {
+        width: 115px;
+        height: 85px;
+    }
+}
+
+
+@media (max-width: 450px) {
+
+    .brand h2 {
+        font-size: 13px;
+    }
+
+    .brand p {
+        font-size: 9px;
+    }
+
+    .brand-icon {
+        width: 39px;
+        height: 39px;
+    }
+
+    .back-btn {
+        padding: 8px 10px;
+
+        font-size: 9px;
+    }
+
+    .page-heading h1 {
+        font-size: 22px;
+    }
+
+    .complaint-card {
+        padding: 17px;
+    }
+
+    .complaint-photos img {
+        width: 100px;
+        height: 75px;
+    }
+}
+/* =====================================================
+   FEEDBACK
+   ===================================================== */
+
+.complaint-feedback {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+}
+
+.feedback-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 10px 16px;
+
+    background: #7c3aed;
+    color: white;
+
+    text-decoration: none;
+
+    border-radius: 9px;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    transition: 0.2s ease;
+}
+
+.feedback-btn:hover {
+    transform: translateY(-2px);
+
+    background: #8b5cf6;
+
+    box-shadow:
+        0 8px 20px rgba(124, 58, 237, 0.30);
+}
+
+.feedback-submitted {
+    padding: 10px 14px;
+
+    border-radius: 9px;
+
+    background: rgba(34, 197, 94, 0.10);
+
+    border: 1px solid rgba(34, 197, 94, 0.25);
+
+    color: #4ade80;
+
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.feedback-disabled {
+    padding: 9px 13px;
+
+    border-radius: 9px;
+
+    background: rgba(255, 255, 255, 0.04);
+
+    color: #777b91;
+
+    font-size: 12px;
+}
+
+@media (max-width: 600px) {
+
+    .complaint-feedback {
+        margin-left: 0;
+        margin-top: 12px;
+        width: 100%;
+    }
+
+    .feedback-btn,
+    .feedback-submitted,
+    .feedback-disabled {
+        width: 100%;
+        text-align: center;
+    }
+}
