@@ -18,6 +18,12 @@ RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
 if RENDER_EXTERNAL_HOSTNAME:
     ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
 
+CSRF_TRUSTED_ORIGINS = [
+    'https://*.onrender.com',
+]
+if RENDER_EXTERNAL_HOSTNAME:
+    CSRF_TRUSTED_ORIGINS.append(f'https://{RENDER_EXTERNAL_HOSTNAME}')
+
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -124,4 +130,4 @@ DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 # Resend API Configuration (Guaranteed Dual-Delivery OTP System)
 RESEND_API_KEY = os.environ.get("RESEND_API_KEY", "re_Du7srVHB_CT5nbta8erQVkHfjNcBEFa5W")
 RESEND_FROM_EMAIL = os.environ.get("RESEND_FROM_EMAIL", "Civic Mapping <onboarding@resend.dev>")
-
+

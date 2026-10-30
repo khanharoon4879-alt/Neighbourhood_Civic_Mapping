@@ -1,6 +1,6 @@
-﻿services:
+services:
   - type: web
-    name: neighbourhood-civic-mapping
+    name: Neighbourhood_Civic_Mapping
     runtime: python
     buildCommand: "./build.sh"
     startCommand: "gunicorn config.wsgi:application"
