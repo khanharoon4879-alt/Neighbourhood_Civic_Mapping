@@ -131,3 +131,5 @@ DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 RESEND_API_KEY = os.environ.get("RESEND_API_KEY", "re_Du7srVHB_CT5nbta8erQVkHfjNcBEFa5W")
 RESEND_FROM_EMAIL = os.environ.get("RESEND_FROM_EMAIL", "Civic Mapping <onboarding@resend.dev>")
 
+
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
